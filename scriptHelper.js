@@ -28,7 +28,6 @@ function validateInput(testInput) {
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-event.preventDefault()
     pilot = document.querySelector("input[name=pilotName]")
     copilot = document.querySelector("input[name=copilotName]")
     fuelLevel = document.querySelector("input[name=fuelLevel]")
@@ -56,22 +55,33 @@ event.preventDefault()
             }
         } break;
     }  
+
 this.document.getElementById('pilotStatus').innerHTML = `Pilot ${pilot.value} is ready to launch.`
 this.document.getElementById('copilotStatus').innerHTML = `Pilot ${copilot.value} is ready to launch.`
 
-if(fuelLevel.value < 100000){
+if(fuelLevel.value < 10000 && cargoLevel.value <= 10000){
     list.style.visibility = 'visible';
     this.document.getElementById('fuelStatus').innerHTML = ` ${fuelLevel.value} liters is not enough for this trip!`
     this.document.getElementById('launchStatus').innerHTML = `Shuttle not ready for launch`
     this.document.getElementById('launchStatus').style.color = 'red'
-}else if(cargoLevel.value > 10000){
+}else if(cargoLevel.value > 10000 && fuelLevel.value < 10000){
+    list.style.visibility = 'visible';
+    this.document.getElementById('cargoStatus').innerHTML = `${cargoLevel.value} kilograms is over the 10,000 kg weight limit!`
+    this.document.getElementById('launchStatus').innerHTML = `Shuttle not ready for launch`
+    this.document.getElementById('launchStatus').style.color = '#C7254E'
+}else if(fuelLevel.value >= 10000 && cargoLevel.value > 10000){
     list.style.visibility = 'visible';
     this.document.getElementById('cargoStatus').innerHTML = `${cargoLevel.value} kilograms is over the 10,000 kg weight limit!`
     this.document.getElementById('launchStatus').innerHTML = `Shuttle not ready for launch`
     this.document.getElementById('launchStatus').style.color = '#C7254E'
 }else{
     this.document.getElementById('launchStatus').style.color = '#419F6A'
+    list.style.visibility = 'visible';
     this.document.getElementById('launchStatus').innerHTML = `Shuttle is ready for launch.`
+    this.document.getElementById('pilotStatus').innerHTML = `Pilot ${pilot.value} is ready to launch.`
+    this.document.getElementById('copilotStatus').innerHTML = `Pilot ${copilot.value} is ready to launch.`
+    this.document.getElementById('cargoStatus').innerHTML = 'Cargo mass low enough for launch.'
+    this.document.getElementById('fuelStatus').innerHTML = `Fuel level high enough for launch.`
 
 }
 
